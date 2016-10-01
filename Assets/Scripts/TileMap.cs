@@ -19,9 +19,12 @@ public class TileMap : MonoBehaviour {
 
     [Header("Tiles")]
     public List<Tile> Tiles;
+
+    [Header("GameBoy Screen")]
+    public Camera cam;
     
     void Start () {
-        Screen.SetResolution(width, height, false);
+        Screen.SetResolution(800, 600, false);
         xTiles = width / tileRoot;
         yTiles = height / tileRoot;
 
