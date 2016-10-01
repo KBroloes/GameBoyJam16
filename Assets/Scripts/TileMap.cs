@@ -27,6 +27,7 @@ public class TileMap : MonoBehaviour {
         Screen.SetResolution(800, 600, false);
         xTiles = width / tileRoot;
         yTiles = height / tileRoot;
+        
 
         tileMap = new TileType[xTiles, yTiles];
 
