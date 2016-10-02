@@ -84,7 +84,7 @@ public class GameManager : MonoBehaviour {
 
     public Unit GetUnitAt(int x, int y)
     {
-        y = y + menuOffset;
+        y = y - menuOffset;
         return PlayerUnitMap[x, y];
     }
 
@@ -92,28 +92,5 @@ public class GameManager : MonoBehaviour {
     {
         Coord coord = GetBoardRelativeCoordinates(location);
         return PlayerUnitMap[coord.x, coord.y] == null;
-    }
-	
-	void Update () {
-	
-	}
-
-    struct Coord
-    {
-        public int x;
-        public int y;
-
-        public Coord(int x, int y)
-        {
-            this.x = x;
-            this.y = y;
-        }
-
-        public static Coord From(Vector2 location)
-        {
-            int x = (int)location.x;
-            int y = (int)location.y;
-            return new Coord(x, y);
-        }
     }
 }

@@ -29,7 +29,7 @@ public class AIDirector : MonoBehaviour {
     void FixedUpdate()
     {
         deltaTime += Time.fixedDeltaTime;
-        if(deltaTime > 5)
+        if(deltaTime > spawnRate)
         {
             spawnEnemy = true;
             deltaTime = 0;
