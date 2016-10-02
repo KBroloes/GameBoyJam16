@@ -8,11 +8,7 @@ public class TileMap : MonoBehaviour {
     public int width = 160;
     public int height = 144;
     public int tileRoot = 16;
-
-    [Header("Position")]
-    public int xOffset = 0;
-    public int yOffset = 0;
-
+    
     TileType[,] tileMap;
     int yTiles;
     int xTiles;
@@ -87,7 +83,7 @@ public class TileMap : MonoBehaviour {
     void AddTile(int x, int y, Tile tile)
     {
         GameObject g = Instantiate(tile.GameObject);
-        g.transform.position = getWorldPos(x, y);
+        g.transform.position = new Vector2(x, y);
     }
 
     void AddMenuTile(int x, int y)
@@ -164,11 +160,6 @@ public class TileMap : MonoBehaviour {
             }
         }
         return null;
-    }
-
-    Vector2 getWorldPos(int x, int y)
-    {
-        return new Vector2(x + xOffset, y + yOffset);
     }
 
     Vector2 getCenter(Vector2 worldPos)

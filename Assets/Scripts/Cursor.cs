@@ -26,7 +26,9 @@ public class Cursor : MonoBehaviour {
         currentCursor = transform.GetComponent<SpriteRenderer>().sprite;
         currentCursor = cursor;
         transform.position = new Vector2(minLaneX, minLaneY);
-	}
+
+        menuPosition = new Vector2(minMenuX, menuY);
+    }
 	
 	void Update () {
         if(Input.GetKeyDown(KeyCode.UpArrow))
@@ -53,6 +55,7 @@ public class Cursor : MonoBehaviour {
                 GoToMenu();
             } else
             {
+                menuPosition = transform.position;
                 transform.position = lastKnownPosition;
             }
             inMenu = !inMenu;
@@ -73,7 +76,7 @@ public class Cursor : MonoBehaviour {
 
     void GoToMenu()
     {
-        transform.position = menuPosition = new Vector2(minMenuX, menuY);
+        transform.position = menuPosition;
     }
 
     void MoveY(int toMove)
