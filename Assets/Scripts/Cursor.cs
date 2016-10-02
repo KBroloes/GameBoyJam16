@@ -21,10 +21,10 @@ public class Cursor : MonoBehaviour {
     public Vector2 lastKnownPosition;
     public Vector2 menuPosition;
 
-    Sprite currentTexture;
+    Sprite currentCursor;
     void Start () {
-        currentTexture = transform.GetComponent<SpriteRenderer>().sprite;
-        currentTexture = cursor;
+        currentCursor = transform.GetComponent<SpriteRenderer>().sprite;
+        currentCursor = cursor;
         transform.position = new Vector2(minLaneX, minLaneY);
 	}
 	
@@ -64,7 +64,7 @@ public class Cursor : MonoBehaviour {
             transform.position = lastKnownPosition;
 
             UnitType unit = GetSelection(menuPosition);
-
+            
             GameManager.instance.SpawnUnit(unit, lastKnownPosition);
 
             inMenu = !inMenu;
