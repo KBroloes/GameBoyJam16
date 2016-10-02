@@ -5,13 +5,27 @@ public class Cursor : MonoBehaviour {
 
     public Sprite cursor;
     public Sprite badCursor;
-    public int maxY;
-    public int maxX;
+
+    [Header("Lanes")]
+    public int minLaneX;
+    public int minLaneY = 3;
+    public int maxLaneY = 7;
+    public int maxLaneX = 9;
+
+    [Header("Menu")]
+    public bool inMenu;
+    public int minMenuX = 1;
+    public int maxMenuX = 8;
+    public int menuY = 1;
+
+    public Vector2 lastKnownPosition;
+    public Vector2 menuPosition;
 
     Sprite currentTexture;
     void Start () {
         currentTexture = transform.GetComponent<SpriteRenderer>().sprite;
         currentTexture = cursor;
+        transform.position = new Vector2(minLaneX, minLaneY);
 	}
 	
 	void Update () {
@@ -31,13 +45,41 @@ public class Cursor : MonoBehaviour {
         {
             MoveX(1);
         }
+        if(Input.GetKeyDown(KeyCode.B))
+        {
+            if(!inMenu)
+            {
+                lastKnownPosition = transform.position;
+                GoToMenu();
+            } else
+            {
+                transform.position = lastKnownPosition;
+            }
+            inMenu = !inMenu;
+        }
+
+        if(Input.GetKeyDown(KeyCode.A) && inMenu)
+        {
+            menuPosition = transform.position;
+            transform.position = lastKnownPosition;
+            // TODO: Place selected object;
+            inMenu = !inMenu;
+        }
+    }
+
+    void GoToMenu()
+    {
+        transform.position = menuPosition = new Vector2(minMenuX, menuY);
     }
 
     void MoveY(int toMove)
     {
         Vector2 pos = transform.position;
 
-        pos.y = Mathf.Clamp(pos.y + toMove, 0, maxY);
+        if(!inMenu)
+        {
+            pos.y = Mathf.Clamp(pos.y + toMove, minLaneY, maxLaneY);
+        }
         transform.position = pos;
     }
 
@@ -45,7 +87,13 @@ public class Cursor : MonoBehaviour {
     {
         Vector2 pos = transform.position;
 
-        pos.x = Mathf.Clamp(pos.x + toMove, 0, maxX);
+        if(!inMenu)
+        {
+            pos.x = Mathf.Clamp(pos.x + toMove, minLaneX, maxLaneX);
+        } else
+        {
+            pos.x = Mathf.Clamp(pos.x + toMove, minMenuX, maxMenuX);
+        }
         transform.position = pos;
     }
 }
