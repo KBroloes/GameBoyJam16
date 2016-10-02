@@ -53,9 +53,14 @@ public class AIDirector : MonoBehaviour {
             spawnEnemy = false;
 
             Enemy enemy = EnemyUnits[enemyIndex];
-            GameManager.instance.SpawnEnemy(enemy, new Vector2(8, lane));
+            GameManager.instance.SpawnEnemy(enemy, new Vector2(10, lane));
             enemies++;
         }
 
+    }
+
+    public Enemy GetEnemyAt(int x, int y)
+    {
+        return null;
     }
 }

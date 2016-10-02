@@ -14,7 +14,7 @@ public class Unit : MonoBehaviour {
     {
         if(Life <= 0)
         {
-            Destroy(this.gameObject);
+            Destroy(gameObject);
         }
     }
 }
@@ -23,5 +23,6 @@ public enum UnitType
 {
     PlayerDefender,
     PlayerGenerator,
-    EnemyAttacker
+    EnemyAttacker,
+    ProjectileMud,
 }

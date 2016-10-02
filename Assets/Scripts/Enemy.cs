@@ -27,7 +27,7 @@ public class Enemy : Unit {
     void FixedUpdate()
     {
         deltaTime += Time.fixedDeltaTime;
-        if(deltaTime >= velocity)
+        if(deltaTime >= 1/velocity)
         {
             move = true;
             deltaTime = 0;
@@ -36,6 +36,10 @@ public class Enemy : Unit {
 
 	void Update () {
         HandleMovement();
+        if(Life <= 0)
+        {
+            Destroy(gameObject);
+        }
 	}
     
     void OnDestroy()
@@ -62,15 +66,20 @@ public class Enemy : Unit {
             // We have a player unit
             if (unit != null)
             {
-
+                EatNeighbour(unit);
             }
             else
             {
-                //Activate animation, and move
+                // TODO: Activate animation, and lerp movement
                 transform.position = new Vector2(neighbour, currentPos.y);
             }
 
             move = false;
         }
+    }
+
+    void EatNeighbour(Unit unit)
+    {
+        unit.Life -= Strength;
     }
 }
