@@ -35,12 +35,22 @@ public class Enemy : Unit {
     }
 
 	void Update () {
+        HandleMovement();
+	}
+    
+    void OnDestroy()
+    {
+        AIDirector.instance.enemies--;
+    }
+
+    void HandleMovement()
+    {
         Coord currentPos = Coord.From(transform.position);
 
         // Check collision with neighbouring tile, and move one tile left
         if (move)
         {
-            int neighbour = Mathf.Clamp(currentPos.x -1, 0, 9);
+            int neighbour = Mathf.Clamp(currentPos.x - 1, 0, 9);
             Unit unit = GameManager.instance.GetUnitAt(neighbour, currentPos.y);
 
             // Detect endgame, last square and no units blocking.
@@ -53,7 +63,8 @@ public class Enemy : Unit {
             if (unit != null)
             {
 
-            } else
+            }
+            else
             {
                 //Activate animation, and move
                 transform.position = new Vector2(neighbour, currentPos.y);
@@ -61,7 +72,5 @@ public class Enemy : Unit {
 
             move = false;
         }
-
-	    
-	}
+    }
 }

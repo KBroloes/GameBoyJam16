@@ -21,8 +21,16 @@ public class AIDirector : MonoBehaviour {
 
     System.Random rng;
 
+
+    public static AIDirector instance;
     void Start()
     {
+        if(instance != null)
+        {
+            Debug.Log("Already have an AI director, deleting this one");
+            Destroy(this);
+        }
+        instance = this;
         rng = new System.Random();
     }
 

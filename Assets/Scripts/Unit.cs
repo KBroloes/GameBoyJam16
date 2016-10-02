@@ -9,6 +9,14 @@ public class Unit : MonoBehaviour {
     [Header("Stats")]
     public int Life = 100;
     public int Strength = 25;
+
+    void Update()
+    {
+        if(Life <= 100)
+        {
+            Destroy(this);
+        }
+    }
 }
 
 public enum UnitType
