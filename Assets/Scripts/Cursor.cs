@@ -17,7 +17,7 @@ public class Cursor : MonoBehaviour {
     public int minMenuX = 1;
     public int maxMenuX = 8;
     public int menuY = 1;
-
+    
     public Vector2 lastKnownPosition;
     public Vector2 menuPosition;
 
@@ -62,7 +62,11 @@ public class Cursor : MonoBehaviour {
         {
             menuPosition = transform.position;
             transform.position = lastKnownPosition;
-            // TODO: Place selected object;
+
+            UnitType unit = GetSelection(menuPosition);
+
+            GameManager.instance.SpawnUnit(unit, lastKnownPosition);
+
             inMenu = !inMenu;
         }
     }
@@ -95,5 +99,12 @@ public class Cursor : MonoBehaviour {
             pos.x = Mathf.Clamp(pos.x + toMove, minMenuX, maxMenuX);
         }
         transform.position = pos;
+    }
+
+    UnitType GetSelection(Vector2 menuCoordinates)
+    {
+        int selection = (int)menuCoordinates.x - 1;
+        
+        return (UnitType)selection;
     }
 }
