@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour {
     public Unit[,] PlayerUnitMap;
 
     [Header("Time")]
-    public int timeLeft = 100;
+    public int timeLeft = 60;
     public int timePassRatePerSecond = 1;
 
     [Header("Currency")]
@@ -21,7 +21,6 @@ public class GameManager : MonoBehaviour {
 
     [Header("Spawnable Units")]
     public List<Unit> PlayerUnits;
-    public List<Unit> EnemyUnits;
 
     int menuOffset = 3;
 
@@ -39,6 +38,14 @@ public class GameManager : MonoBehaviour {
     void Init()
     {
         PlayerUnitMap = new Unit[xUnits, yUnits];
+    }
+
+    // Assumes lane-centric coordinates
+    public void SpawnEnemy(Enemy enemy, Vector2 location)
+    {
+        GameObject instantiated = Instantiate(enemy.unitPrefab);
+        
+        instantiated.transform.position = GetWorldVector(location);
     }
 
     public void SpawnUnit(UnitType type, Vector2 location)
@@ -68,6 +75,11 @@ public class GameManager : MonoBehaviour {
 
         if (relativeCoords.y < 0) relativeCoords.y = 0;
         return relativeCoords;
+    }
+
+    Vector2 GetWorldVector(Vector2 BoardLocation)
+    {
+        return new Vector2(BoardLocation.x, BoardLocation.y + menuOffset);
     }
 
     public Unit GetUnitAt(int x, int y)
