@@ -12,9 +12,9 @@ public class Unit : MonoBehaviour {
 
     void Update()
     {
-        if(Life <= 100)
+        if(Life <= 0)
         {
-            Destroy(this);
+            Destroy(this.gameObject);
         }
     }
 }
