@@ -19,9 +19,9 @@ public class TileMap : MonoBehaviour {
 
     [Header("Tiles")]
     public List<Tile> Tiles;
-
     public List<MenuTile> MenuTiles;
-        
+    public List<MenuTile> MenuItems;
+
     void Start () {
         Screen.SetResolution(800, 600, false);
         xTiles = width / tileRoot;
@@ -81,6 +81,7 @@ public class TileMap : MonoBehaviour {
                 }
             }
         }
+        AddMenuItems();
     }
 
     void AddTile(int x, int y, Tile tile)
@@ -141,6 +142,17 @@ public class TileMap : MonoBehaviour {
         }
 
         AddTile(x, y, tile);
+    }
+
+    void AddMenuItems()
+    {
+        int x = 1;
+        int y = 1;
+        foreach(MenuTile tile in MenuItems)
+        {
+            AddTile(x, y, tile);
+            x++;
+        }
     }
 
     MenuTile GetMenuTile(TilePlacement placement)
