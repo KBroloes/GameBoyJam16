@@ -19,7 +19,7 @@ public class TileMap : MonoBehaviour {
     public List<MenuTile> MenuItems;
 
     void Start () {
-        Screen.SetResolution(800, 600, false);
+        //Screen.SetResolution(800, 600, false);
         xTiles = width / tileRoot;
         yTiles = height / tileRoot;
         
