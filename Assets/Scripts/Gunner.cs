@@ -7,6 +7,7 @@ public class Gunner : MonoBehaviour {
 
     [Header("Projectiles per Second")]
     public float FiringRate = 0.5f;
+    public int range = 10;
 
     bool canFire;
     float deltaTime;
@@ -31,7 +32,7 @@ public class Gunner : MonoBehaviour {
 
     void Update()
     {
-        if(canFire)
+        if(canFire && DetectEnemy())
         {
             Projectile p = Instantiate(Projectile);
             Vector2 pos = transform.position;
@@ -45,5 +46,22 @@ public class Gunner : MonoBehaviour {
             }
             canFire = false;
         }
+    }
+
+    bool DetectEnemy()
+    {
+        Vector2 rayCastFrom = transform.position;
+        rayCastFrom.y -= 0.5f; //Account for y position being top of coordinate and will detect two lanes at once.
+
+        RaycastHit2D[] hits = Physics2D.RaycastAll(rayCastFrom, new Vector2(1, 0), range);
+        Debug.DrawRay(transform.position, new Vector2(1, 0), Color.red, range);
+        foreach(RaycastHit2D hit in hits)
+        {
+            if(hit.collider.gameObject.tag == "Enemy")
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }
