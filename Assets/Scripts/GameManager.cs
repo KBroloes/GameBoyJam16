@@ -19,6 +19,8 @@ public class GameManager : MonoBehaviour {
     public int passiveGeneration = 10;
     public int activeGeneration = 0;
 
+    int currency;
+
     [Header("Spawnable Units")]
     public List<Unit> PlayerUnits;
 
