@@ -176,16 +176,6 @@ public enum TileType
 {
     Grass,
     Fence,
-    Menu
-}
-
-public enum Spawnables
-{
-    Generator,
-    DefenderWorm
-}
-
-public enum Enemies
-{
-    JumpyBird
+    Menu,
+    Letter
 }
