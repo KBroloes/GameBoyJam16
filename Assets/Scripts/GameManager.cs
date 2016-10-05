@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
 
@@ -25,6 +26,7 @@ public class GameManager : MonoBehaviour {
     public List<Unit> PlayerUnits;
 
     int menuOffset = 3;
+    bool gameOver;
 
     void Start () {
 	    if(instance != null)
@@ -37,9 +39,35 @@ public class GameManager : MonoBehaviour {
         Init();
 	}
 
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (!MenuScreen.instance.IsActive)
+            {
+                MenuScreen.instance.ShowMenu("Paused");
+            }
+            else if(gameOver)
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                //TODO: SceneManager.LoadScene("Next Level");
+            }
+            else
+            {
+                MenuScreen.instance.CloseMenu();
+            }
+        }
+    }
+
     void Init()
     {
         PlayerUnitMap = new Unit[xUnits, yUnits];
+    }
+
+    public void EndGame()
+    {
+        MenuScreen.instance.ShowMenu("You Lose!");
+        gameOver = true;
     }
 
     // Assumes lane-centric coordinates

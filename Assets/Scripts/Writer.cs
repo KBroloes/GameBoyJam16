@@ -19,7 +19,7 @@ public class Writer : MonoBehaviour {
         }
 	}
 
-    public List<Word> Write(string garbleflarg)
+    public List<Word> Write(string garbleflarg, int scale = 1)
     {
         string[] split = garbleflarg.Split(' ');
         List<Word> words = new List<Word>();
@@ -27,13 +27,13 @@ public class Writer : MonoBehaviour {
         // For now, one line per word.
         for(int lineNo = 0; lineNo < split.Length; lineNo++)
         {
-            words.Add(WriteWord(split[lineNo]));
+            words.Add(WriteWord(split[lineNo], scale));
         }
 
         return words;        
     }
 
-    public Word WriteWord(string word)
+    public Word WriteWord(string word, int scale)
     {
         List<LetterTile> letters = new List<LetterTile>();
 
@@ -43,9 +43,9 @@ public class Writer : MonoBehaviour {
             Letter l = alphabet.getLetter(c.ToString());
             LetterTile newLetter = Instantiate(letterPrefab);
 
-            newLetter.SetScale(2);
+            newLetter.SetScale(scale);
             newLetter.SetSprite(l.sprite);
-            newLetter.transform.localPosition = new Vector2(i, 0);
+            newLetter.transform.localPosition = new Vector2(i*0.5f*scale, 0);
 
             letters.Add(newLetter);
         }

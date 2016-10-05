@@ -60,7 +60,7 @@ public class Enemy : Unit {
             // Detect endgame, last square and no units blocking.
             if (currentPos.x == 0 && unit == null)
             {
-                //You lose.
+                GameManager.instance.EndGame();
             }
 
             // We have a player unit

@@ -7,7 +7,6 @@ public class MenuScreen : MonoBehaviour {
     public bool IsActive = false;
     public static MenuScreen instance;
     public Writer writer;
-
     
     List<GameObject> tiles;
     List<Word> words;
@@ -31,13 +30,6 @@ public class MenuScreen : MonoBehaviour {
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            ShowMenu("Hello World");
-        } else if(Input.GetKeyDown(KeyCode.Return))
-        {
-            CloseMenu();
-        }
         if(IsActive)
         {
             Time.timeScale = 0;
@@ -51,22 +43,30 @@ public class MenuScreen : MonoBehaviour {
     {
         RenderMenu();
 
-        words = writer.Write(message);
-        int startY = GetCenteredStartYPos(words);
+        int scale = 2;
+        words = writer.Write(message, scale);
+
+        // Account for coordinate system
         words.Reverse();
-        foreach(Word word in words)
+
+        float yPos = GetCenteredStartYPos(words, scale);
+
+        foreach (Word word in words)
         {
-            int xPos = GetCenteredStartXPos(word);
-            Vector2 position = new Vector2(xPos, startY);
+            int xPos = GetCenteredStartXPos(word, scale);
+            Vector2 position = new Vector2(xPos, yPos);
             word.transform.position = position;
 
-            startY++;
+            yPos += scale * 0.5f;
         }
     }
-    
-    public int GetCenteredStartYPos(List<Word> words)
+
+    int wordsPerTile = 2;
+    public int GetCenteredStartYPos(List<Word> words, int scale)
     {
         int wordcount = words.Count;
+        wordcount /= wordsPerTile * scale;
+
         int startPosY = 0;
         if (wordcount > height)
         {
@@ -74,22 +74,27 @@ public class MenuScreen : MonoBehaviour {
         }
         else
         {
-            startPosY = (height - wordcount) / 2;
+            int margin = 2;
+            startPosY = (height - wordcount) / margin;
         }
 
         return startPosY;
     }
 
-    public int GetCenteredStartXPos(Word word)
+    int lettersPerTile = 2;
+    public int GetCenteredStartXPos(Word word, int scale)
     {
-        int letters = word.Letters.Count;
+        int tilesRequired = word.Letters.Count;
+        tilesRequired /= lettersPerTile / scale;
+
         int startPosX = 0;
-        if(letters > width)
+        if(tilesRequired > width)
         {
             // Whoops
         } else
         {
-            startPosX = (width - letters) / 2;
+            int margin = 2;
+            startPosX = (width - tilesRequired) / margin;
         }
 
         return startPosX;
