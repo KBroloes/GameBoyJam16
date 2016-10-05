@@ -21,7 +21,6 @@ public class AIDirector : MonoBehaviour {
 
     System.Random rng;
 
-
     public static AIDirector instance;
     void Start()
     {
@@ -46,7 +45,7 @@ public class AIDirector : MonoBehaviour {
 
     void Update()
     {
-        if (spawnEnemy)
+        if (spawnEnemy && GameManager.instance.GetTimeLeft() > 0)
         {
             int lane = rng.Next(minLane, maxLane);
             int enemyIndex = rng.Next(0, EnemyUnits.Count);

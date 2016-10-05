@@ -13,8 +13,9 @@ public class GameManager : MonoBehaviour {
     public Unit[,] PlayerUnitMap;
 
     [Header("Time")]
-    public int timeLeft = 60;
+    public int totalTime = 60;
     public int timePassRatePerSecond = 1;
+    public float timeLeft;
 
     [Header("Currency")]
     public int passiveGeneration = 10;
@@ -35,6 +36,7 @@ public class GameManager : MonoBehaviour {
             Destroy(this);
         }
         instance = this;
+        timeLeft = totalTime;
 
         Init();
 	}
@@ -57,6 +59,20 @@ public class GameManager : MonoBehaviour {
                 MenuScreen.instance.CloseMenu();
             }
         }
+
+        if (timeLeft <= 0 && AIDirector.instance.enemies == 0)
+        {
+            WinGame();
+        }
+    }
+
+    void FixedUpdate()
+    {
+        if(timeLeft > 0 )
+        {
+            timeLeft -= Time.fixedDeltaTime * timePassRatePerSecond;
+            timeLeft = Mathf.Clamp(timeLeft, 0f, totalTime);
+        }
     }
 
     void Init()
@@ -67,6 +83,11 @@ public class GameManager : MonoBehaviour {
     public void EndGame()
     {
         MenuScreen.instance.ShowMenu("You Lose!");
+        gameOver = true;
+    }
+    public void WinGame()
+    {
+        MenuScreen.instance.ShowMenu("You Win!");
         gameOver = true;
     }
 
@@ -122,5 +143,10 @@ public class GameManager : MonoBehaviour {
     {
         Coord coord = GetBoardRelativeCoordinates(location);
         return PlayerUnitMap[coord.x, coord.y] == null;
+    }
+
+    public float GetTimeLeft()
+    {
+        return timeLeft;
     }
 }
