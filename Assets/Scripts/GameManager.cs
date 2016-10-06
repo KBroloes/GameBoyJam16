@@ -17,17 +17,18 @@ public class GameManager : MonoBehaviour {
     public int timePassRatePerSecond = 1;
     public float timeLeft;
 
-    [Header("Currency")]
-    public int passiveGeneration = 10;
-    public int activeGeneration = 0;
-
-    int currency;
-
     [Header("Spawnable Units")]
     public List<Unit> PlayerUnits;
 
     int menuOffset = 3;
     bool gameOver;
+    Currency currency;
+
+    void Init()
+    {
+        PlayerUnitMap = new Unit[xUnits, yUnits];
+        currency = GetComponent<Currency>();
+    }
 
     void Start () {
 	    if(instance != null)
@@ -43,8 +44,8 @@ public class GameManager : MonoBehaviour {
 
     void Update()
     {
-        if(!MenuScreen.instance.IsActive)
-            DrawCurrency();
+        if (!MenuScreen.instance.IsActive)
+            currency.DrawUIElement(new Vector2(1, 1.5f));
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -66,53 +67,23 @@ public class GameManager : MonoBehaviour {
         if (timeLeft <= 0 && AIDirector.instance.enemies == 0)
         {
             WinGame();
-            currentCurrency.Erase();
-        }
-
-        if(addCurrency)
-        {
-            currency += activeGeneration + passiveGeneration;
-            addCurrency = false;
+            currency.EraseUIElement();
         }
     }
 
-    Word currentCurrency;
-    void DrawCurrency()
-    {
-        if(currentCurrency != null)
-        {
-            currentCurrency.Erase();
-        }
-        currentCurrency = MenuScreen.instance.writer.WriteWord(currency.ToString(), 1);
-        currentCurrency.transform.position = new Vector2(1, 1.5f);
-    }
-
-    float currencyTimer = 0f;
-    bool addCurrency;
     void FixedUpdate()
     {
         if(timeLeft > 0 )
         {
             timeLeft -= Time.fixedDeltaTime * timePassRatePerSecond;
             timeLeft = Mathf.Clamp(timeLeft, 0f, totalTime);
-
-            currencyTimer += Time.fixedDeltaTime;
-            if (currencyTimer >= 1f)
-            {
-                currencyTimer -= 1f;
-                addCurrency = true;
-            }
         }
-    }
-
-    void Init()
-    {
-        PlayerUnitMap = new Unit[xUnits, yUnits];
     }
 
     public void EndGame()
     {
         MenuScreen.instance.ShowMenu("You Lose!");
+        currency.EraseUIElement();
         gameOver = true;
     }
     public void WinGame()
@@ -137,14 +108,14 @@ public class GameManager : MonoBehaviour {
         {
             if(unit.unitType == type)
             {
-                if(unit.Cost > currency)
+                if(unit.Cost > currency.Get())
                 {
                     //TODO: Display help text and current currency
                     return;
                 }
                 else if (CanSpawnUnit(location))
                 {
-                    currency -= unit.Cost;
+                    currency.Spend(unit.Cost);
 
                     Unit instantiated = Instantiate(unit);
                     instantiated.transform.position = location;
