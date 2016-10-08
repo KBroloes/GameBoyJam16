@@ -1,18 +1,20 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class GameUI : MonoBehaviour {
 
     public int HUDPosition = 8;
 
-    public Currency currency;
-    
+    public List<HUDElement> elements;
 
     void Update()
     {
-        if (!MenuScreen.instance.IsActive)
-            currency.DrawUIElement(new Vector2(1, 1.5f));
-        else
-            currency.EraseUIElement();
+        foreach(HUDElement element in elements)
+        {
+            if (!MenuScreen.instance.IsActive)
+                element.ui.DrawUIElement(element.position);
+            else
+                element.ui.EraseUIElement();
+        }
     }
-
 }

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Currency : MonoBehaviour {
+public class Currency : DrawableUI {
     public int passiveGeneration = 5;
     public float generationRate = 2f;
 
@@ -14,6 +14,9 @@ public class Currency : MonoBehaviour {
             currency += passiveGeneration;
             addCurrency = false;
         }
+
+        //TODO: Nasty hack because interfaces are not supported in the inspector.
+        UIValue = currency.ToString();
     }
 
     float currencyTimer = 0f;
@@ -36,21 +39,5 @@ public class Currency : MonoBehaviour {
     public int Get()
     {
         return currency;
-    }
-
-    Word currentCurrency;
-    public void DrawUIElement(Vector2 position)
-    {
-        EraseUIElement();
-        currentCurrency = MenuScreen.instance.writer.WriteWord(currency.ToString(), 1);
-        currentCurrency.transform.position = position;
-    }
-
-    public void EraseUIElement()
-    {
-        if (currentCurrency != null)
-        {
-            currentCurrency.Erase();
-        }
-    }
+    }    
 }
