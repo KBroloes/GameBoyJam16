@@ -20,7 +20,7 @@ public class Word : MonoBehaviour {
     }
 
 
-    public void SetPositionMask(PositionMask mask)
+    public void SetPositionMask(PositionMask mask, int scale)
     {
         Vector2 origin = transform.position;
         switch(mask)
@@ -29,13 +29,13 @@ public class Word : MonoBehaviour {
             default:
                 break;
             case PositionMask.TopRight:
-                origin.x += 0.5f;
+                origin.x += 0.5f * scale;
                 break;
             case PositionMask.BottomLeft:
                 origin.y -= 0.5f;
                 break;
             case PositionMask.BottomRight:
-                origin.x += 0.5f;
+                origin.x += 0.5f * scale;
                 origin.y -= 0.5f;
                 break;
         }

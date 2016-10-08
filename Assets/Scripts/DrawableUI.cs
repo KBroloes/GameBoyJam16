@@ -30,7 +30,7 @@ public class DrawableUI : MonoBehaviour {
         //TODO: Maybe use a different writer.
         drawable = MenuScreen.instance.writer.WriteWord(UIValue, scale);
         drawable.transform.position = position;
-        drawable.SetPositionMask(mask);
+        drawable.SetPositionMask(mask, scale);
         CalculatePositionOffset();
 
         if (background != null)
@@ -88,7 +88,7 @@ public class DrawableUI : MonoBehaviour {
                 yOffset = 0f;
                 break;
             case Word.PositionMask.TopRight:
-                xOffset = 0.5f;
+                xOffset = 0.5f * scale;
                 yOffset = 0f;
                 break;
             case Word.PositionMask.BottomLeft:
@@ -96,7 +96,7 @@ public class DrawableUI : MonoBehaviour {
                 yOffset = -0.5f;
                 break;
             case Word.PositionMask.BottomRight:
-                xOffset = 0.5f;
+                xOffset = 0.5f * scale;
                 yOffset = -0.5f;
                 break;
         }
