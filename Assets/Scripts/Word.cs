@@ -5,6 +5,11 @@ using System.Collections.Generic;
 public class Word : MonoBehaviour {
 
     public List<LetterTile> Letters;
+
+    public int GetLength()
+    {
+        return Letters.Count;
+    }
     
     public void Add(List<LetterTile> letters) {
         Letters.AddRange(letters);

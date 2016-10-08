@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class Currency : DrawableUI {
+
+    [Header("Currency Regen")]
     public int passiveGeneration = 5;
     public float generationRate = 2f;
 

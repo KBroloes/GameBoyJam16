@@ -12,9 +12,9 @@ public class GameUI : MonoBehaviour {
         foreach(HUDElement element in elements)
         {
             if (!MenuScreen.instance.IsActive)
-                element.ui.DrawUIElement(element.position);
+                element.drawable.DrawUIElement(element.position);
             else
-                element.ui.EraseUIElement();
+                element.drawable.EraseUIElement();
         }
     }
 }

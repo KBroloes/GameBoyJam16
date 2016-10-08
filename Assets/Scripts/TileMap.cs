@@ -177,5 +177,6 @@ public enum TileType
     Grass,
     Fence,
     Menu,
-    Letter
+    Letter,
+    Background
 }
