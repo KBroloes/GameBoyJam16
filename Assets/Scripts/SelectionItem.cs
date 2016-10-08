@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 [System.Serializable]
 public class SelectionItem : DrawableUI {
@@ -7,25 +6,31 @@ public class SelectionItem : DrawableUI {
     [Header("Selection")]
     public Tile selectionTile;
     public Tile selectionBackground;
-    public int cost;
+    public int Cost;
     public Unit unit;
     public Vector2 labelRelativePosition;
 
     void Start()
     {
-        UIValue = cost.ToString();
+        UIValue = Cost.ToString();
     }
 
     void Update()
     {
-        Writer writer = FindObjectOfType<Writer>();
-        if (writer != null)
+        if (!MenuScreen.instance.IsActive)
         {
-            Vector2 position = transform.position;
-            position.x += labelRelativePosition.x;
-            position.y += labelRelativePosition.y;
-            EraseUIElement();
-            DrawUIElement(position);
+            Writer writer = FindObjectOfType<Writer>();
+            if (writer != null)
+            {
+                Vector2 position = transform.position;
+                position.x += labelRelativePosition.x;
+                position.y += labelRelativePosition.y;
+                EraseUIElement();
+                DrawUIElement(position);
+            }
         }
+        else
+            EraseUIElement();
+        
     }
 }

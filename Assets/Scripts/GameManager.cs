@@ -10,10 +10,7 @@ public class GameManager : MonoBehaviour {
     public int xUnits = 10;
     public int yUnits = 5;
     public Unit[,] PlayerUnitMap;
-
-    [Header("Spawnable Units")]
-    public List<Unit> PlayerUnits;
-
+    
     int menuOffset = 3;
     bool gameOver;
 
@@ -21,6 +18,7 @@ public class GameManager : MonoBehaviour {
     public Currency currency;
     public TimeManager time;
     public GameUI gameUI;
+    public SelectionMenu selectionMenu;
 
     void Init()
     {
@@ -65,12 +63,18 @@ public class GameManager : MonoBehaviour {
 
     public void EndGame()
     {
-        MenuScreen.instance.ShowMenu("You Lose!");
+        if (!MenuScreen.instance.IsActive)
+        {
+            MenuScreen.instance.ShowMenu("You Lose!");
+        }
         gameOver = true;
     }
     public void WinGame()
     {
-        MenuScreen.instance.ShowMenu("You Win!");
+        if (!MenuScreen.instance.IsActive)
+        {
+            MenuScreen.instance.ShowMenu("You Win!");
+        }
         gameOver = true;
     }
 
@@ -82,28 +86,26 @@ public class GameManager : MonoBehaviour {
         instantiated.transform.position = GetWorldVector(location);
     }
 
-    public void SpawnUnit(UnitType type, Vector2 location)
+    public void SpawnUnit(Vector2 menuPosition, Vector2 spawnLocation)
     {
-        Coord coord = GetBoardRelativeCoordinates(location);
+        Coord coord = GetBoardRelativeCoordinates(spawnLocation);
+        SelectionItem selection = selectionMenu.GetSelectionItem(menuPosition);
 
-        foreach (Unit unit in PlayerUnits)
+        if(selection != null)
         {
-            if(unit.unitType == type)
+            Unit unit = selection.unit;
+            if (selection.Cost > currency.Get())
             {
-                if(unit.Cost > currency.Get())
-                {
-                    //TODO: Display help text and current currency
-                    return;
-                }
-                else if (CanSpawnUnit(location))
-                {
-                    currency.Spend(unit.Cost);
+                //TODO: Display help text/mark cursor
+                return;
+            }
+            else if (CanSpawnUnit(spawnLocation))
+            {
+                currency.Spend(selection.Cost);
 
-                    Unit instantiated = Instantiate(unit);
-                    instantiated.transform.position = location;
-                    PlayerUnitMap[coord.x, coord.y] = instantiated;
-                }
-                break;
+                Unit instantiated = Instantiate(unit);
+                instantiated.transform.position = spawnLocation;
+                PlayerUnitMap[coord.x, coord.y] = instantiated;
             }
         }
     }

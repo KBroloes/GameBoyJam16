@@ -35,7 +35,6 @@ public class Gunner : MonoBehaviour {
         if(canFire && DetectEnemy())
         {
             Projectile p = Instantiate(Projectile);
-            Vector2 pos = transform.position;
 
             // TODO: Do some animation magic and maybe spawn the projectile in front of the worm
             p.transform.position = transform.position;

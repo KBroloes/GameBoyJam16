@@ -5,14 +5,16 @@ using System.Collections.Generic;
 public class SelectionMenu : MonoBehaviour {
     [Header("Menu Dimensions")]
     public int width = 10;
-    public int height = 9;
+    public int height = 3;
 
     [Header("Tiles")]
     public List<MenuTile> MenuTiles;
     public List<SelectionItem> MenuItems;
 
+    SelectionItem[,] selectionItems;
     void Start()
     {
+        selectionItems = new SelectionItem[width, height];
         for (int x = 0; x < width; x++)
         {
             for (int y = 0; y < height; y++)
@@ -21,6 +23,11 @@ public class SelectionMenu : MonoBehaviour {
             }
         }
         AddMenuItems();
+    }
+
+    public SelectionItem GetSelectionItem(Vector2 position)
+    {
+        return selectionItems[(int)position.x, (int)position.y];
     }
 
     MenuTile GetMenuTile(TilePlacement placement)
@@ -45,13 +52,17 @@ public class SelectionMenu : MonoBehaviour {
     {
         int x = 1;
         int y = 1;
+        // Hardcoded to one row for now
+
         foreach (SelectionItem item in MenuItems)
         {
-            if(item.selectionBackground != null)
+            if (item.selectionBackground != null)
             {
                 AddTile(x, y, item.selectionBackground);
             }
+
             AddTile(x, y, item.selectionTile);
+            selectionItems[x, y] = item;
             x++;
         }
     }

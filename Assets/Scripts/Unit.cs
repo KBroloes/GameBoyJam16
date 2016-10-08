@@ -9,7 +9,6 @@ public class Unit : MonoBehaviour {
     [Header("Stats")]
     public int Life = 100;
     public int Strength = 25;
-    public int Cost = 25;
 
     void Update()
     {
