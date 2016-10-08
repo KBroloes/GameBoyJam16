@@ -40,26 +40,31 @@ public class GameManager : MonoBehaviour {
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (!MenuScreen.instance.IsActive)
-            {
-                MenuScreen.instance.ShowMenu("Paused");
-            }
-            else if(gameOver)
-            {
-                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-                //TODO: SceneManager.LoadScene("Next Level");
-            }
-            else
-            {
-                MenuScreen.instance.CloseMenu();
-            }
+            ActivateMenu();
         }
 
         if (time.Get() <= 0 && AIDirector.instance.enemies == 0)
         {
             WinGame();
         }
-    }    
+    }  
+    
+    public void ActivateMenu()
+    {
+        if (!MenuScreen.instance.IsActive)
+        {
+            MenuScreen.instance.ShowMenu("Paused");
+        }
+        else if (gameOver)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            //TODO: SceneManager.LoadScene("Next Level");
+        }
+        else
+        {
+            MenuScreen.instance.CloseMenu();
+        }
+    }  
 
     public void EndGame()
     {

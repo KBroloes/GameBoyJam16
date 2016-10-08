@@ -45,26 +45,12 @@ public class Cursor : MonoBehaviour {
         }
         if(Input.GetKeyDown(KeyCode.B))
         {
-            if(!inMenu)
-            {
-                lastKnownPosition = transform.position;
-                GoToMenu();
-            } else
-            {
-                menuPosition = transform.position;
-                transform.position = lastKnownPosition;
-            }
-            inMenu = !inMenu;
+            B();
         }
 
         if(Input.GetKeyDown(KeyCode.A) && inMenu)
         {
-            menuPosition = transform.position;
-            transform.position = lastKnownPosition;
-
-            GameManager.instance.SpawnUnit(menuPosition, lastKnownPosition);
-
-            inMenu = !inMenu;
+            A();
         }
     }
 
@@ -73,7 +59,32 @@ public class Cursor : MonoBehaviour {
         transform.position = menuPosition;
     }
 
-    void MoveY(int toMove)
+    public void B()
+    {
+        if (!inMenu)
+        {
+            lastKnownPosition = transform.position;
+            GoToMenu();
+        }
+        else
+        {
+            menuPosition = transform.position;
+            transform.position = lastKnownPosition;
+        }
+        inMenu = !inMenu;
+    }
+
+    public void A()
+    {
+        menuPosition = transform.position;
+        transform.position = lastKnownPosition;
+
+        GameManager.instance.SpawnUnit(menuPosition, lastKnownPosition);
+
+        inMenu = !inMenu;
+    }
+
+    public void MoveY(int toMove)
     {
         Vector2 pos = transform.position;
 
@@ -84,7 +95,7 @@ public class Cursor : MonoBehaviour {
         transform.position = pos;
     }
 
-    void MoveX(int toMove)
+    public void MoveX(int toMove)
     {
         Vector2 pos = transform.position;
 
