@@ -10,12 +10,14 @@ public class DrawableUI : MonoBehaviour {
     public int scale = 1;
 
     public Word.PositionMask mask;
+    public Tile icon;
 
     [Header("Debug")]
     public int tileLength;
 
     Word drawable;
     List<Tile> backgroundTiles;
+    Tile activeIcon;
     void Start()
     {
         backgroundTiles = new List<Tile>();
@@ -29,8 +31,9 @@ public class DrawableUI : MonoBehaviour {
         drawable = MenuScreen.instance.writer.WriteWord(UIValue, scale);
         drawable.transform.position = position;
         drawable.SetPositionMask(mask);
+        CalculatePositionOffset();
 
-        if(background != null)
+        if (background != null)
         {
             tileLength = GetTileLength();
             for (int i = 0; i < tileLength; i++)
@@ -42,6 +45,18 @@ public class DrawableUI : MonoBehaviour {
                 bgTile.transform.position = backgroundPos;
                 backgroundTiles.Add(bgTile);
             }
+        }
+        if(icon != null)
+        {
+            activeIcon = Instantiate(icon);
+            // Place icon in front of UI text, regardless of background;
+            Vector2 iconPosition = position;
+            iconPosition.x -= 0.5f * scale - xOffset;
+            iconPosition.y += yOffset;
+            activeIcon.transform.position = iconPosition;
+
+            // Resize icon to scale
+            activeIcon.transform.localScale = new Vector2(scale, scale);
         }
     }
     
@@ -56,14 +71,40 @@ public class DrawableUI : MonoBehaviour {
             Destroy(t.gameObject);
         }
         backgroundTiles.Clear();
+        if(activeIcon != null)
+        {
+            Destroy(activeIcon.gameObject);
+        }
     }
 
+    float xOffset = 0f;
+    float yOffset = 0f;
+    public void CalculatePositionOffset()
+    {
+        switch(mask)
+        {
+            case Word.PositionMask.TopLeft:
+                xOffset = 0;
+                yOffset = 0f;
+                break;
+            case Word.PositionMask.TopRight:
+                xOffset = 0.5f;
+                yOffset = 0f;
+                break;
+            case Word.PositionMask.BottomLeft:
+                xOffset = 0;
+                yOffset = -0.5f;
+                break;
+            case Word.PositionMask.BottomRight:
+                xOffset = 0.5f;
+                yOffset = -0.5f;
+                break;
+        }
+    }
+
+    
     public int GetTileLength()
     {
-        float offset = 0f;
-        if (mask == Word.PositionMask.BottomRight || mask == Word.PositionMask.TopRight)
-            offset = 0.5f;
-        
-        return Mathf.CeilToInt(drawable.GetLength() * 0.5f * scale + offset);
+        return Mathf.CeilToInt(drawable.GetLength() * 0.5f * scale + xOffset);
     }
 }
