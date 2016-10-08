@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 
@@ -22,12 +21,14 @@ public class GameManager : MonoBehaviour {
 
     int menuOffset = 3;
     bool gameOver;
-    Currency currency;
+
+    [Header("Dependencies")]
+    public Currency currency;
+    public GameUI gameUI;
 
     void Init()
     {
         PlayerUnitMap = new Unit[xUnits, yUnits];
-        currency = GetComponent<Currency>();
     }
 
     void Start () {
@@ -44,11 +45,6 @@ public class GameManager : MonoBehaviour {
 
     void Update()
     {
-        if (!MenuScreen.instance.IsActive)
-            currency.DrawUIElement(new Vector2(1, 1.5f));
-        else
-            currency.EraseUIElement();
-
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (!MenuScreen.instance.IsActive)
@@ -84,7 +80,6 @@ public class GameManager : MonoBehaviour {
     public void EndGame()
     {
         MenuScreen.instance.ShowMenu("You Lose!");
-        currency.EraseUIElement();
         gameOver = true;
     }
     public void WinGame()
