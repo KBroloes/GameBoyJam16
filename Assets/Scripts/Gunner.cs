@@ -4,6 +4,7 @@ using System.Collections;
 public class Gunner : MonoBehaviour {
 
     public Projectile Projectile;
+    Animator animator;
 
     [Header("Projectiles per Second")]
     public float FiringRate = 0.5f;
@@ -17,6 +18,7 @@ public class Gunner : MonoBehaviour {
     void Start()
     {
         unit = GetComponent<Unit>();
+        animator = GetComponent<Animator>();
     }
 
     void FixedUpdate()
@@ -32,19 +34,29 @@ public class Gunner : MonoBehaviour {
 
     void Update()
     {
-        if(canFire && DetectEnemy())
+        if (canFire && DetectEnemy())
         {
-            Projectile p = Instantiate(Projectile);
-
-            // TODO: Do some animation magic and maybe spawn the projectile in front of the worm
-            p.transform.position = transform.position;
-            if(unit != null)
-            {
-                // Assign the unit strength for convenience in strength checking
-                p.Strength = unit.Strength;
-            }
-            canFire = false;
+            animator.SetBool("Throw", canFire);
         }
+        
+    }
+
+    void Fire()
+    {
+        Projectile p = Instantiate(Projectile);
+
+        // TODO: Do some animation magic and maybe spawn the projectile in front of the worm
+        Vector2 projectilePosition = transform.position;
+        projectilePosition.x += 0.5f;
+        p.transform.position = projectilePosition;
+
+        if (unit != null)
+        {
+            // Assign the unit strength for convenience in strength checking
+            p.Strength = unit.Strength;
+        }
+        canFire = false;
+        animator.SetBool("Throw", canFire);
     }
 
     bool DetectEnemy()
