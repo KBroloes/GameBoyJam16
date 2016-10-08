@@ -11,11 +11,6 @@ public class GameManager : MonoBehaviour {
     public int yUnits = 5;
     public Unit[,] PlayerUnitMap;
 
-    [Header("Time")]
-    public int totalTime = 60;
-    public int timePassRatePerSecond = 1;
-    public float timeLeft;
-
     [Header("Spawnable Units")]
     public List<Unit> PlayerUnits;
 
@@ -24,6 +19,7 @@ public class GameManager : MonoBehaviour {
 
     [Header("Dependencies")]
     public Currency currency;
+    public TimeManager time;
     public GameUI gameUI;
 
     void Init()
@@ -38,7 +34,6 @@ public class GameManager : MonoBehaviour {
             Destroy(this);
         }
         instance = this;
-        timeLeft = totalTime;
 
         Init();
 	}
@@ -62,20 +57,11 @@ public class GameManager : MonoBehaviour {
             }
         }
 
-        if (timeLeft <= 0 && AIDirector.instance.enemies == 0)
+        if (time.Get() <= 0 && AIDirector.instance.enemies == 0)
         {
             WinGame();
         }
-    }
-
-    void FixedUpdate()
-    {
-        if(timeLeft > 0 )
-        {
-            timeLeft -= Time.fixedDeltaTime * timePassRatePerSecond;
-            timeLeft = Mathf.Clamp(timeLeft, 0f, totalTime);
-        }
-    }
+    }    
 
     public void EndGame()
     {
@@ -151,6 +137,6 @@ public class GameManager : MonoBehaviour {
 
     public float GetTimeLeft()
     {
-        return timeLeft;
+        return time.Get();
     }
 }

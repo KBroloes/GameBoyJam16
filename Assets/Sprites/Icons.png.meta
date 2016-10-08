@@ -1,10 +1,11 @@
 fileFormatVersion: 2
-guid: 59f3b85ca710a2542b3e1294e54a3ffb
-timeCreated: 1475407325
+guid: 424994bc69d7a69408c4513665abe547
+timeCreated: 1475944064
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: MenuItems_0
+    21300000: Icons_0
+    21300002: Icons_1
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -51,7 +52,7 @@ TextureImporter:
   textureType: 8
   buildTargetSettings:
   - buildTarget: Standalone
-    maxTextureSize: 2048
+    maxTextureSize: 32
     textureFormat: -3
     compressionQuality: 50
     allowsAlphaSplitting: 0
@@ -59,13 +60,26 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: MenuItems_0
+      name: Icons_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 16
-        height: 16
+        width: 8
+        height: 8
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Icons_1
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 0
+        width: 8
+        height: 8
       alignment: 1
       pivot: {x: 0, y: 1}
       border: {x: 0, y: 0, z: 0, w: 0}

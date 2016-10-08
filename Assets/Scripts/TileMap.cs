@@ -15,11 +15,8 @@ public class TileMap : MonoBehaviour {
 
     [Header("Tiles")]
     public List<Tile> Tiles;
-    public List<MenuTile> MenuTiles;
-    public List<MenuTile> MenuItems;
 
     void Start () {
-        //Screen.SetResolution(800, 600, false);
         xTiles = width / tileRoot;
         yTiles = height / tileRoot;
         
@@ -62,7 +59,7 @@ public class TileMap : MonoBehaviour {
 
                 if(t == TileType.Menu)
                 {
-                    AddMenuTile(x, y);
+                    // Not this guy's job anymore.
                     continue;
                 }
 
@@ -77,89 +74,12 @@ public class TileMap : MonoBehaviour {
                 }
             }
         }
-        AddMenuItems();
     }
 
     void AddTile(int x, int y, Tile tile)
     {
         GameObject g = Instantiate(tile.GameObject);
         g.transform.position = new Vector2(x, y);
-    }
-
-    void AddMenuTile(int x, int y)
-    {
-        Tile tile;
-        // Check Left Border
-        if (x == 0)
-        {
-            switch(y)
-            {
-                case 0:
-                    tile = GetMenuTile(TilePlacement.BottomLeftCorner);
-                    break;
-                case 2:
-                    tile = GetMenuTile(TilePlacement.TopLeftCorner);
-                    break;
-                default:
-                    tile = GetMenuTile(TilePlacement.LeftSide);
-                    break;
-            }
-        }
-        // Check Right Border
-        else if (x == (width / tileRoot) -1)
-        {
-            switch (y)
-            {
-                case 0:
-                    tile = GetMenuTile(TilePlacement.BottomRightCorner);
-                    break;
-                case 2:
-                    tile = GetMenuTile(TilePlacement.TopRightCorner);
-                    break;
-                default:
-                    tile = GetMenuTile(TilePlacement.RightSide);
-                    break;
-            }
-        }
-        // Check Bottom
-        else if(y == 0)
-        {
-            tile = GetMenuTile(TilePlacement.Bottom);
-        }
-        // Check Top
-        else if (y == 2)
-        {
-            tile = GetMenuTile(TilePlacement.Top);
-        }
-        else
-        {
-            // Everything else
-            tile = GetMenuTile(TilePlacement.Center);
-        }
-
-        AddTile(x, y, tile);
-    }
-
-    void AddMenuItems()
-    {
-        int x = 1;
-        int y = 1;
-        foreach(MenuTile tile in MenuItems)
-        {
-            AddTile(x, y, tile);
-            x++;
-        }
-    }
-
-    MenuTile GetMenuTile(TilePlacement placement)
-    {
-        foreach(MenuTile tile in MenuTiles) {
-            if(tile.Placement == placement)
-            {
-                return tile;
-            }
-        }
-        return null;
     }
 
     Vector2 getCenter(Vector2 worldPos)

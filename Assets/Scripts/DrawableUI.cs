@@ -16,19 +16,15 @@ public class DrawableUI : MonoBehaviour {
     public int tileLength;
 
     Word drawable;
-    List<Tile> backgroundTiles;
+    List<Tile> backgroundTiles = new List<Tile>();
     Tile activeIcon;
-    void Start()
-    {
-        backgroundTiles = new List<Tile>();
-    }
 
     public void DrawUIElement(Vector2 position)
     {
         EraseUIElement();
         
-        //TODO: Maybe use a different writer.
-        drawable = MenuScreen.instance.writer.WriteWord(UIValue, scale);
+        // TODO: Where to get this in a proper way?
+        drawable = FindObjectOfType<Writer>().WriteWord(UIValue, scale);
         drawable.transform.position = position;
         drawable.SetPositionMask(mask, scale);
         CalculatePositionOffset();
