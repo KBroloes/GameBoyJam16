@@ -46,6 +46,8 @@ public class GameManager : MonoBehaviour {
     {
         if (!MenuScreen.instance.IsActive)
             currency.DrawUIElement(new Vector2(1, 1.5f));
+        else
+            currency.EraseUIElement();
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -67,7 +69,6 @@ public class GameManager : MonoBehaviour {
         if (timeLeft <= 0 && AIDirector.instance.enemies == 0)
         {
             WinGame();
-            currency.EraseUIElement();
         }
     }
 
