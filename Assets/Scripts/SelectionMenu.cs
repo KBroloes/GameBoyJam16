@@ -27,6 +27,9 @@ public class SelectionMenu : MonoBehaviour {
 
     public SelectionItem GetSelectionItem(Vector2 position)
     {
+        if (position.x >= selectionItems.GetLength(0) || position.y >= selectionItems.GetLength(1))
+            return null;
+
         return selectionItems[(int)position.x, (int)position.y];
     }
 
