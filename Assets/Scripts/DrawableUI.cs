@@ -6,7 +6,10 @@ public class DrawableUI : MonoBehaviour {
     [Header("DrawableUI")]
     public string UIValue;
     public Tile background;
+    [Range(1,2)]
     public int scale = 1;
+
+    public Word.PositionMask mask;
 
     [Header("Debug")]
     public int tileLength;
@@ -25,6 +28,7 @@ public class DrawableUI : MonoBehaviour {
         //TODO: Maybe use a different writer.
         drawable = MenuScreen.instance.writer.WriteWord(UIValue, scale);
         drawable.transform.position = position;
+        drawable.SetPositionMask(mask);
 
         if(background != null)
         {
@@ -56,6 +60,10 @@ public class DrawableUI : MonoBehaviour {
 
     public int GetTileLength()
     {
-        return Mathf.CeilToInt(drawable.GetLength() * 0.5f * scale);
+        float offset = 0f;
+        if (mask == Word.PositionMask.BottomRight || mask == Word.PositionMask.TopRight)
+            offset = 0.5f;
+        
+        return Mathf.CeilToInt(drawable.GetLength() * 0.5f * scale + offset);
     }
 }
