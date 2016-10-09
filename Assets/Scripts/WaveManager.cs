@@ -41,7 +41,7 @@ public class WaveManager : MonoBehaviour {
         waveTime += Time.deltaTime;
         if(currentWave != null)
         {
-            if(waveTime >= timer && !finalWave)
+            if(waveTime >= timer)
             {
                 BeginNextWave();
                 waveTime = 0f;
@@ -62,13 +62,19 @@ public class WaveManager : MonoBehaviour {
 
     void BeginNextWave()
     {
-        currentWave = Waves[nextWave];
-        nextWave++;
+        if(finalWave)
+        {
+            currentWave = null;
+        } else
+        {
+            currentWave = Waves[nextWave];
+            nextWave++;
 
-        timer = currentWave.duration;
+            timer = currentWave.duration;
 
-        // Reached end of waves?
-        finalWave = nextWave == Waves.Count;
+            // Reached end of waves?
+            finalWave = nextWave == Waves.Count;
+        }
     }
 
     float spawnTimer;
