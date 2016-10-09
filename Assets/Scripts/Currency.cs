@@ -32,6 +32,11 @@ public class Currency : DrawableUI {
         }
     }
 
+    public void Add(int amount)
+    {
+        currency += amount;
+    }
+
     public void Spend(int amount)
     {
         currency -= amount;
@@ -40,5 +45,5 @@ public class Currency : DrawableUI {
     public int Get()
     {
         return currency;
-    }    
+    }
 }

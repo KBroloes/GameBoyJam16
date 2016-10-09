@@ -9,6 +9,7 @@ public class AIDirector : MonoBehaviour {
 
     [Header("Frequency of enemies")]
     public int spawnRate = 5;
+    public int spawnDelay = 5;
 
     [Header("Lanes to spawn in (i.e. training maps)")]
     public int minLane = 0;
@@ -36,10 +37,11 @@ public class AIDirector : MonoBehaviour {
     void FixedUpdate()
     {
         deltaTime += Time.fixedDeltaTime;
-        if(deltaTime > spawnRate)
+        if(deltaTime > spawnRate + spawnDelay)
         {
             spawnEnemy = true;
             deltaTime = 0;
+            spawnDelay = 0;
         }
     }
 

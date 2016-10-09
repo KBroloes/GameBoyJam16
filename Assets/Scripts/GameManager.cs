@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour {
     public TimeManager time;
     public GameUI gameUI;
     public SelectionMenu selectionMenu;
+    public Cursor cursor;
 
     void Init()
     {
