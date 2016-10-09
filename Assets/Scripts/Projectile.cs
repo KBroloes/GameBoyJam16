@@ -54,6 +54,11 @@ public class Projectile : Unit {
             Enemy enemy = other.GetComponent<Enemy>();
             Damage(enemy);
             Destroy(gameObject);
+
+            if (SoundManager.instance != null)
+            {
+                SoundManager.instance.PlayOnce(SoundType.Hit);
+            }
         }
     }
 

@@ -45,7 +45,11 @@ public class Gunner : MonoBehaviour {
     {
         Projectile p = Instantiate(Projectile);
 
-        // TODO: Do some animation magic and maybe spawn the projectile in front of the worm
+        if(SoundManager.instance != null)
+        {
+            SoundManager.instance.PlayOnce(SoundType.Throw);
+        }
+
         Vector2 projectilePosition = transform.position;
         projectilePosition.x += 0.5f;
         p.transform.position = projectilePosition;
