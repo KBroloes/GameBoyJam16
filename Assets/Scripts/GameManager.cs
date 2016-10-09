@@ -42,6 +42,10 @@ public class GameManager : MonoBehaviour {
         {
             ActivateMenu();
         }
+        if(Input.GetKeyDown(KeyCode.Q))
+        {
+            Application.Quit();
+        }
 
         if (time.Get() <= 0 && AIDirector.instance.enemies == 0)
         {
