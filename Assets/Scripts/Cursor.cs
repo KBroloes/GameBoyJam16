@@ -48,7 +48,7 @@ public class Cursor : MonoBehaviour {
             B();
         }
 
-        if(Input.GetKeyDown(KeyCode.A) && inMenu)
+        if(Input.GetKeyDown(KeyCode.A))
         {
             A();
         }
@@ -76,12 +76,15 @@ public class Cursor : MonoBehaviour {
 
     public void A()
     {
-        menuPosition = transform.position;
-        transform.position = lastKnownPosition;
+        if (inMenu)
+        {
+            menuPosition = transform.position;
+            transform.position = lastKnownPosition;
 
-        GameManager.instance.SpawnUnit(menuPosition, lastKnownPosition);
+            GameManager.instance.SpawnUnit(menuPosition, lastKnownPosition);
 
-        inMenu = !inMenu;
+            inMenu = !inMenu;
+        }
     }
 
     public void MoveY(int toMove)
