@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: c00ea041a39cf3d498c18c201f30af87
-timeCreated: 1475619046
+timeCreated: 1476046749
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -43,6 +43,7 @@ TextureImporter:
     21300072: Alphabet_36
     21300074: Alphabet_37
     21300076: Alphabet_38
+    21300078: Alphabet_39
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -595,6 +596,19 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 304
+        y: 0
+        width: 8
+        height: 8
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Alphabet_39
+      rect:
+        serializedVersion: 2
+        x: 312
         y: 0
         width: 8
         height: 8

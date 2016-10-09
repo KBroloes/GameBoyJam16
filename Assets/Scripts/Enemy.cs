@@ -34,7 +34,7 @@ public class Enemy : Unit {
     
     void OnDestroy()
     {
-        AIDirector.instance.enemies--;
+        AIDirector.instance.EnemiesLeft--;
     }
 
     Coord currentPos;

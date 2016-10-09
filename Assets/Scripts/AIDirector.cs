@@ -3,24 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class AIDirector : MonoBehaviour {
-
-    [Header("Enemy variants to spawn")]
-    public List<Enemy> EnemyUnits;
-
-    [Header("Frequency of enemies")]
-    public int spawnRate = 5;
+    [Header("Delay before first wave")]
     public int spawnDelay = 5;
 
-    [Header("Lanes to spawn in (i.e. training maps)")]
-    public int minLane = 0;
-    public int maxLane = 4;
+    [Header("Enemies spawned")]
+    public int EnemiesLeft = 0;
 
     [Header("Debug only")]
-    public int enemies = 0;
     public float deltaTime;
-    public bool spawnEnemy = false;
 
-    System.Random rng;
+    [Header("Dependencies")]
+    public WaveManager waveManager;
+    public TimeManager timeManager;
 
     public static AIDirector instance;
     void Start()
@@ -31,37 +25,46 @@ public class AIDirector : MonoBehaviour {
             Destroy(this);
         }
         instance = this;
-        rng = new System.Random();
     }
 
+    bool wavesStarted;
     void FixedUpdate()
     {
         deltaTime += Time.fixedDeltaTime;
-        if(deltaTime > spawnRate + spawnDelay)
+
+        if (!wavesStarted)
         {
-            spawnEnemy = true;
-            deltaTime = 0;
-            spawnDelay = 0;
+            if (deltaTime >= spawnDelay)
+            {
+                waveManager.BeginWaves();
+                wavesStarted = true;
+                deltaTime = 0;
+            }
         }
     }
 
     void Update()
     {
-        if (spawnEnemy && GameManager.instance.GetTimeLeft() > 0)
-        {
-            int lane = rng.Next(minLane, maxLane);
-            int enemyIndex = rng.Next(0, EnemyUnits.Count);
-            spawnEnemy = false;
-
-            Enemy enemy = EnemyUnits[enemyIndex];
-            GameManager.instance.SpawnEnemy(enemy, new Vector2(10, lane));
-            enemies++;
-        }
-
+        UpdateTimeLeft();
     }
 
-    public Enemy GetEnemyAt(int x, int y)
+    public bool GameEnd()
     {
-        return null;
+        return waveManager.finalWave && EnemiesLeft == 0 && timeLeft <= 0;
+    }
+
+    float timeLeft;
+    void UpdateTimeLeft()
+    {
+        if(!wavesStarted)
+        {
+            timeLeft = waveManager.GetTotalTime() + spawnDelay - deltaTime;
+        } else
+        {
+            timeLeft = waveManager.GetTotalTime() - deltaTime;
+        }
+        timeLeft = Mathf.Clamp(timeLeft, 0, 999);
+
+        timeManager.Set(timeLeft);
     }
 }

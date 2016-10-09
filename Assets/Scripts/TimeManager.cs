@@ -3,28 +3,17 @@
 public class TimeManager : DrawableUI {
 
     [Header("Time")]
-    public int totalTime = 60;
-    public int timePassRatePerSecond = 1;
-    public float timeLeft;
+    public float timeLeft = 999;
     
-    void Start()
-    {
-        timeLeft = totalTime;
-    }
-
     void Update()
     {
         //TODO: Nasty hack because interfaces are not supported in the inspector.
         UIValue = Mathf.Round(timeLeft).ToString();
     }
 
-    void FixedUpdate()
+    public void Set(float time)
     {
-        if (timeLeft > 0)
-        {
-            timeLeft -= Time.fixedDeltaTime * timePassRatePerSecond;
-            timeLeft = Mathf.Clamp(timeLeft, 0f, totalTime);
-        }
+        timeLeft = time >= 0 ? time : 0;
     }
     
     public float Get()

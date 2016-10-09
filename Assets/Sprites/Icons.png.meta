@@ -1,11 +1,12 @@
 fileFormatVersion: 2
 guid: 424994bc69d7a69408c4513665abe547
-timeCreated: 1475944064
+timeCreated: 1476046474
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
     21300000: Icons_0
     21300002: Icons_1
+    21300004: Icons_2
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -52,7 +53,7 @@ TextureImporter:
   textureType: 8
   buildTargetSettings:
   - buildTarget: Standalone
-    maxTextureSize: 32
+    maxTextureSize: 2048
     textureFormat: -3
     compressionQuality: 50
     allowsAlphaSplitting: 0
@@ -77,6 +78,19 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 8
+        y: 0
+        width: 8
+        height: 8
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Icons_2
+      rect:
+        serializedVersion: 2
+        x: 16
         y: 0
         width: 8
         height: 8

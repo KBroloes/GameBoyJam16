@@ -16,10 +16,10 @@ public class GameManager : MonoBehaviour {
 
     [Header("Dependencies")]
     public Currency currency;
-    public TimeManager time;
     public GameUI gameUI;
     public SelectionMenu selectionMenu;
     public Cursor cursor;
+    public TimeManager time;
 
     void Init()
     {
@@ -48,7 +48,7 @@ public class GameManager : MonoBehaviour {
             Application.Quit();
         }
 
-        if (time.Get() <= 0 && AIDirector.instance.enemies == 0)
+        if (AIDirector.instance.GameEnd())
         {
             WinGame();
         }
@@ -145,10 +145,5 @@ public class GameManager : MonoBehaviour {
     {
         Coord coord = GetBoardRelativeCoordinates(location);
         return PlayerUnitMap[coord.x, coord.y] == null;
-    }
-
-    public float GetTimeLeft()
-    {
-        return time.Get();
     }
 }
