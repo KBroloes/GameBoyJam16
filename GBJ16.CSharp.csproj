@@ -65,6 +65,7 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\AIDirector.cs" />
     <Compile Include="Assets\Scripts\Alphabet.cs" />
+    <Compile Include="Assets\Scripts\CameraController.cs" />
     <Compile Include="Assets\Scripts\Coord.cs" />
     <Compile Include="Assets\Scripts\Currency.cs" />
     <Compile Include="Assets\Scripts\Cursor.cs" />
