@@ -65,5 +65,7 @@ public class Projectile : Unit {
     void Damage(Enemy enemy)
     {
         enemy.Life -= Strength;
+        Animator enemyAnimator = enemy.gameObject.GetComponent<Animator>();
+        enemyAnimator.SetTrigger("Hit");
     }
 }
